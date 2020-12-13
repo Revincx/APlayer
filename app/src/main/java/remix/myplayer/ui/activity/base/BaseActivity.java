@@ -94,7 +94,7 @@ public class BaseActivity extends AppCompatActivity {
    * 设置状态栏颜色
    */
   protected void setStatusBarColor() {
-    StatusBarUtil.setColor(this, ThemeStore.getStatusBarColor());
+    StatusBarUtil.setColorNoTranslucent(this, ThemeStore.getStatusBarColor());
   }
 
   /**
