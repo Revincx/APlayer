@@ -7,11 +7,12 @@ import android.graphics.Bitmap
 import android.graphics.PixelFormat
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.session.PlaybackState
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.provider.Settings
-import android.support.annotation.WorkerThread
+import androidx.annotation.WorkerThread
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
@@ -539,7 +540,6 @@ class MusicService : BaseService(), Playback, MusicEventCallback,
       override fun onFinish() {
         exitAfterCompletion = true
       }
-
       override fun revert() {
         exitAfterCompletion = false
       }

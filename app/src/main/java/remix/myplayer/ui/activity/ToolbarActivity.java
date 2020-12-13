@@ -1,16 +1,17 @@
 package remix.myplayer.ui.activity;
 
-import static remix.myplayer.theme.ThemeStore.getMaterialPrimaryColor;
-
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import remix.myplayer.R;
 import remix.myplayer.theme.ToolbarContentTintHelper;
 import remix.myplayer.ui.activity.base.BaseMusicActivity;
+
+import static remix.myplayer.theme.ThemeStore.*;
 
 
 /**
@@ -32,6 +33,8 @@ public class ToolbarActivity extends BaseMusicActivity {
     toolbar.setNavigationIcon(iconRes);
     toolbar.setNavigationOnClickListener(v -> onClickNavigation());
   }
+
+
 
   protected void setUpToolbar(String title) {
     setUpToolbar(title, R.drawable.ic_arrow_back_white_24dp);

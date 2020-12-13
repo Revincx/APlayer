@@ -36,7 +36,7 @@
   <color name="dark_background_color_main">#242428</color>
   <color name="dark_background_color_dialog">#1d1a1d</color>
   <color name="dark_text_color_primary">#ffffff</color>
-  <color name="dark_text_color_secondary">#6c6a6c</color>
+  <color name="dark_text_color_secondary">#9C9C9C</color>
   <color name="dark_divider_color">#00000000</color>
   <color name="dark_ripple_color">#33ffffff</color>
   <!--<color name="night_ripple_color">#353538</color>-->
@@ -45,6 +45,9 @@
   <!--Divider-->
   <color name="black_background_color_main">#000000</color>
   <color name="black_library_color">#000000</color>
+  <color name="translucent_gray">#C99F9F9F</color>
+  <color name="player_bg">#CCFFFFFF</color>
+  <color name="player_bg_dark">#C9292929</color>
 
   <!--New End-->
 

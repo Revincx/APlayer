@@ -6,6 +6,7 @@
 #*.apk
 #*.json
 
+/build
 /*
 !/libs
 !/src

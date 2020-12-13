@@ -3,7 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="0dp"
-  android:layout_weight="1.5">
+  android:layout_weight="1.2">
   <LinearLayout
     android:layout_width="0dp"
     android:layout_weight="1"
@@ -38,7 +38,8 @@
     <FrameLayout
       android:id="@+id/playbar_play_container"
       android:layout_width="@dimen/d56_size"
-      android:layout_height="@dimen/d56_size">
+      android:layout_height="@dimen/d56_size"
+      android:elevation="10dp">
       <remix.myplayer.ui.widget.playpause.PlayPauseView
         android:id="@+id/playbar_play_pause"
         android:layout_width="@dimen/player_button_size"

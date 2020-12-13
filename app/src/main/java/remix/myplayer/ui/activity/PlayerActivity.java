@@ -2,15 +2,12 @@ package remix.myplayer.ui.activity;
 
 import static remix.myplayer.misc.ExtKt.isPortraitOrientation;
 import static remix.myplayer.service.MusicService.EXTRA_CONTROL;
-import static remix.myplayer.theme.ThemeStore.getAccentColor;
-import static remix.myplayer.theme.ThemeStore.getPlayerNextSongBgColor;
-import static remix.myplayer.theme.ThemeStore.getPlayerProgressColor;
-import static remix.myplayer.theme.ThemeStore.isLightTheme;
-import static remix.myplayer.theme.ThemeStore.sColoredNavigation;
+import static remix.myplayer.theme.ThemeStore.*;
 import static remix.myplayer.util.Constants.MODE_LOOP;
 import static remix.myplayer.util.Constants.MODE_REPEAT;
 import static remix.myplayer.util.Constants.MODE_SHUFFLE;
 import static remix.myplayer.util.ImageUriUtil.getSearchRequestWithAlbumType;
+import static remix.myplayer.util.ImageUriUtil.showUrlBlur;
 import static remix.myplayer.util.SPUtil.SETTING_KEY.BOTTOM_OF_NOW_PLAYING_SCREEN;
 import static remix.myplayer.util.Util.registerLocalReceiver;
 import static remix.myplayer.util.Util.sendLocalBroadcast;
@@ -33,13 +30,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.graphics.Palette;
-import android.support.v7.graphics.Palette.Swatch;
-import android.support.v7.widget.PopupMenu;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
+import androidx.palette.graphics.Palette;
+import androidx.palette.graphics.Palette.Swatch;
+import androidx.appcompat.widget.PopupMenu;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
@@ -58,6 +55,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.facebook.drawee.view.SimpleDraweeView;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -168,6 +166,10 @@ public class PlayerActivity extends BaseMusicActivity implements FileChooserDial
   SeekBar mVolumeSeekbar;
   @BindView(R.id.volume_container)
   View mVolumeContainer;
+  @BindView(R.id.bg_cover)
+  SimpleDraweeView mBackgroundCover;
+  @BindView(R.id.layout_player)
+  LinearLayout mRootLayout;
   //歌词控件
   private LrcView mLrcView;
   //高亮与非高亮指示器
@@ -251,6 +253,7 @@ public class PlayerActivity extends BaseMusicActivity implements FileChooserDial
         themeRes = R.style.PlayerActivityStyle;
     }
     setTheme(themeRes);
+
   }
 
   @Override
@@ -264,15 +267,11 @@ public class PlayerActivity extends BaseMusicActivity implements FileChooserDial
     }
   }
 
-  @Override
-  protected void setStatusBarMode() {
-    StatusBarUtil.setStatusBarMode(this, ThemeStore.getBackgroundColorMain(this));
-  }
 
-  @Override
-  protected void setStatusBarColor() {
-    StatusBarUtil.setColorNoTranslucent(this, ThemeStore.getBackgroundColorMain(this));
-  }
+//  @Override
+//  protected void setStatusBarColor() {
+//    StatusBarUtil.setTransparent(this);
+//  }
 
   @SuppressLint("ClickableViewAccessibility")
   @Override
@@ -281,6 +280,7 @@ public class PlayerActivity extends BaseMusicActivity implements FileChooserDial
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_player);
     ButterKnife.bind(this);
+
 
     mHandler = new MsgHandler(this);
 
@@ -294,6 +294,9 @@ public class PlayerActivity extends BaseMusicActivity implements FileChooserDial
     setUpIndicator();
     setUpSeekBar();
     setUpViewColor();
+
+    StatusBarUtil.setTransparent(this);
+    mRootLayout.setBackgroundColor(getPlayerBgColor());
 
     registerLocalReceiver(mReceiver,new IntentFilter(ACTION_UPDATE_NEXT));
   }
@@ -1017,10 +1020,12 @@ public class PlayerActivity extends BaseMusicActivity implements FileChooserDial
     mPlayPauseView.setBackgroundColor(accentColor);
     //下一首背景
     mNextSong.setBackground(new GradientDrawableMaker()
-        .color(getPlayerNextSongBgColor())
-        .corner(DensityUtil.dip2px(2))
+            .color(Color.TRANSPARENT)
+        .corner(DensityUtil.dip2px(99))
         .width(DensityUtil.dip2px(288))
         .height(DensityUtil.dip2px(38))
+        .strokeSize(3)
+        .strokeColor(R.color.translucent_gray)
         .make());
     mNextSong.setTextColor(ThemeStore.getPlayerNextSongTextColor());
 
@@ -1079,6 +1084,7 @@ public class PlayerActivity extends BaseMusicActivity implements FileChooserDial
 
   private void updateCover(boolean withAnimation) {
     mCoverFragment.updateCover(mInfo, mUri, withAnimation);
+    showUrlBlur(mBackgroundCover,mUri,1,6);
     mFirstStart = false;
   }
 

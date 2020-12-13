@@ -4,14 +4,14 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="0dp"
-  android:layout_weight="1.5">
+  android:layout_weight="1.2">
   <TextView
     android:layout_marginTop="@dimen/d8_size"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/d36_size"
     android:layout_marginRight="@dimen/d36_size"
-    android:paddingTop="@dimen/d12_size"
+    android:paddingTop="@dimen/d10_size"
     android:paddingBottom="@dimen/d12_size"
     android:paddingStart="@dimen/d8_size"
     android:paddingEnd="@dimen/d8_size"
@@ -26,7 +26,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/volume_container"
-    android:layout_marginBottom="@dimen/d16_size">
+    android:layout_marginBottom="@dimen/d12_size">
     <ImageButton
       android:id="@+id/volume_down"
       android:layout_width="@dimen/player_volume_button_size"

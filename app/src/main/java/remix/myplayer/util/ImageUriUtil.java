@@ -2,10 +2,12 @@ package remix.myplayer.util;
 
 import android.content.ContentUris;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Audio.Media;
-import android.support.annotation.Nullable;
+import android.util.Log;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import java.io.File;
 import java.io.InputStream;
@@ -13,6 +15,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.AbstractDraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.postprocessors.IterativeBoxBlurPostProcessor;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import remix.myplayer.App;
 import remix.myplayer.bean.lastfm.Image;
 import remix.myplayer.bean.mp3.Album;
@@ -251,6 +260,21 @@ public class ImageUriUtil {
       return imageUrls.get(ImageSize.UNKNOWN);
     }
     return null;
+  }
+
+  public static void showUrlBlur(SimpleDraweeView draweeView, Uri uri, int iterations, int blurRadius) {
+    try {
+      ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+              .setPostprocessor(new IterativeBoxBlurPostProcessor(iterations, blurRadius))
+              .build();
+      AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
+              .setOldController(draweeView.getController())
+              .setImageRequest(request)
+              .build();
+      draweeView.setController(controller);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
 

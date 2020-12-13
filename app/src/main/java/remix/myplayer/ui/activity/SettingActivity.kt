@@ -12,8 +12,8 @@ import android.os.Environment
 import android.os.Message
 import android.provider.MediaStore
 import android.provider.Settings
-import android.support.v4.content.FileProvider
-import android.support.v7.widget.SwitchCompat
+import androidx.core.content.FileProvider
+import androidx.appcompat.widget.SwitchCompat
 import android.text.TextUtils
 import android.view.View
 import android.widget.CompoundButton
@@ -201,7 +201,7 @@ class SettingActivity : ToolbarActivity(), FolderChooserDialog.FolderCallback, F
     ButterKnife.apply(arrayOf(mNaviSwitch, mShakeSwitch, mFloatLrcSwitch, mShowStatusbarLyric, mScreenSwitch, mNotifyStyleSwitch, mImmersiveSwitch, mBreakpointSwitch, mIgnoreMediastoreSwitch, mShowDisplaynameSwitch, mAudioFocusSwitch)) { view, index ->
       TintHelper.setTintAuto(view, getAccentColor(), false)
 
-      view.isChecked = SPUtil.getValue(mContext, SETTING_KEY.NAME, keyWord[index], false)
+      view.isChecked = SPUtil.getValue(mContext, SETTING_KEY.NAME, keyWord[index], true)
       //5.0以上才支持变色导航栏
       if (view.id == R.id.setting_navaigation_switch) {
         view.isEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
@@ -280,6 +280,7 @@ class SettingActivity : ToolbarActivity(), FolderChooserDialog.FolderCallback, F
     //主题颜色指示器
     (mPrimaryColorSrc.drawable as GradientDrawable)
         .setColor(getMaterialPrimaryColor())
+
     (mAccentColorSrc.drawable as GradientDrawable).setColor(getAccentColor())
 
     //初始化箭头颜色
@@ -365,6 +366,7 @@ class SettingActivity : ToolbarActivity(), FolderChooserDialog.FolderCallback, F
         mNeedRefreshAdapter = true
       }
       "ExportPlayList" -> {
+
         if (TextUtils.isEmpty(playListName)) {
           ToastUtil.show(mContext, R.string.export_fail)
           return

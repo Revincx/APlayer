@@ -16,11 +16,11 @@ class LyricPriorityAdapter(context: Context?, layoutId: Int) : BaseAdapter<Lyric
         object : TypeToken<List<LyricPriority>>() {}.type)
 
     val all = listOf(LyricPriority.KUGOU,
-        LyricPriority.NETEASE,
-        LyricPriority.QQ,
-        LyricPriority.LOCAL,
-        LyricPriority.EMBEDED,
-        LyricPriority.IGNORE)
+            LyricPriority.NETEASE,
+            LyricPriority.QQ,
+            LyricPriority.LOCAL,
+            LyricPriority.EMBEDED,
+            LyricPriority.IGNORE)
     if (mDatas.size < all.size) {
       if (!mDatas.contains(LyricPriority.QQ)) {
         mDatas.add(2,LyricPriority.QQ)
@@ -30,6 +30,7 @@ class LyricPriorityAdapter(context: Context?, layoutId: Int) : BaseAdapter<Lyric
       }
 
     }
+
   }
 
   override fun convert(holder: LyricPriorityHolder?, d: LyricPriority?, position: Int) {

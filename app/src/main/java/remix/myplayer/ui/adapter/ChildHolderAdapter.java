@@ -2,17 +2,16 @@ package remix.myplayer.ui.adapter;
 
 import static remix.myplayer.helper.MusicServiceRemote.setPlayQueue;
 import static remix.myplayer.request.ImageUriRequest.SMALL_IMAGE_SIZE;
-import static remix.myplayer.theme.ThemeStore.getHighLightTextColor;
-import static remix.myplayer.theme.ThemeStore.getTextColorPrimary;
+import static remix.myplayer.theme.ThemeStore.*;
 import static remix.myplayer.util.ImageUriUtil.getSearchRequestWithAlbumType;
 import static remix.myplayer.util.MusicUtil.makeCmdIntent;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -118,13 +117,10 @@ public class ChildHolderAdapter extends HeaderAdapter<Song, BaseViewHolder> impl
       //高亮
       if (MusicServiceRemote.getCurrentSong().getId() == song.getId()) {
         mLastPlaySong = song;
-        holder.mName.setTextColor(getHighLightTextColor());
-        holder.mIndicator.setVisibility(View.VISIBLE);
+        holder.mName.setTextColor(getAccentColor());
       } else {
         holder.mName.setTextColor(getTextColorPrimary());
-        holder.mIndicator.setVisibility(View.GONE);
       }
-      holder.mIndicator.setBackgroundColor(getHighLightTextColor());
 
       //设置标题
       holder.mName.setText(song.getShowName());
@@ -211,13 +207,11 @@ public class ChildHolderAdapter extends HeaderAdapter<Song, BaseViewHolder> impl
       }
 
       if (newHolder != null) {
-        newHolder.mName.setTextColor(getHighLightTextColor());
-        newHolder.mIndicator.setVisibility(View.VISIBLE);
+        newHolder.mName.setTextColor(getAccentColor());
       }
 
       if (oldHolder != null) {
         oldHolder.mName.setTextColor(getTextColorPrimary());
-        oldHolder.mIndicator.setVisibility(View.GONE);
       }
       mLastPlaySong = currentSong;
     }
@@ -234,8 +228,7 @@ public class ChildHolderAdapter extends HeaderAdapter<Song, BaseViewHolder> impl
     @BindView(R.id.song_button)
     public ImageButton mButton;
     public View mContainer;
-    @BindView(R.id.indicator)
-    View mIndicator;
+
 
     ChildHolderViewHolder(View itemView) {
       super(itemView);

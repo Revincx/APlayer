@@ -4,14 +4,13 @@ import static remix.myplayer.theme.Theme.resolveColor;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StyleRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StyleRes;
 import remix.myplayer.App;
 import remix.myplayer.R;
 import remix.myplayer.util.ColorUtil;
 import remix.myplayer.util.SPUtil;
-import remix.myplayer.util.SPUtil.SETTING_KEY;
 
 /**
  * @ClassName
@@ -35,7 +34,7 @@ public class ThemeStore {
   public static int STATUS_BAR_ALPHA = 150;
 
   public static boolean sColoredNavigation = false;
-  public static boolean sImmersiveMode = false;
+  public static boolean sImmersiveMode = true;
   public static String sTheme = LIGHT;
 
 
@@ -86,6 +85,11 @@ public class ThemeStore {
     return primaryColor;
   }
 
+  public static int getPlayerBgColor(){
+    return isLightTheme() ? ColorUtil.getColor(R.color.player_bg): ColorUtil.getColor(R.color.player_bg_dark);
+//    return isLightTheme() ? Color.WHITE: Color.BLACK;
+  }
+
   public static void saveMaterialPrimaryColor(@ColorInt int color) {
     SPUtil.putValue(App.getContext(), NAME, KEY_PRIMARY_COLOR, color);
   }
@@ -93,12 +97,10 @@ public class ThemeStore {
   @ColorInt
   public static int getMaterialPrimaryColor() {
     //纯白需要处理下
-    int primaryColor = SPUtil
-        .getValue(App.getContext(), NAME, KEY_PRIMARY_COLOR, Color.parseColor("#698cf6"));
 //    if (ColorUtil.isColorCloseToWhite(primaryColor)) {
 //      primaryColor = ColorUtil.getColor(R.color.accent_gray_color);
 //    }
-    return primaryColor;
+    return isLightTheme() ? SPUtil.getValue(App.getContext(), NAME, KEY_PRIMARY_COLOR, Color.parseColor("#FFFFFF")):getBackgroundColorMain(App.getContext());
 
   }
 
@@ -135,6 +137,9 @@ public class ThemeStore {
 
   @ColorInt
   public static int getStatusBarColor() {
+    if(!isLightTheme()){
+      return getBackgroundColorMain(App.getContext());
+    }
     return sImmersiveMode ? getMaterialPrimaryColor() : getMaterialPrimaryDarkColor();
   }
 
@@ -277,6 +282,10 @@ public class ThemeStore {
 
   public static boolean isBlackTheme() {
     return getThemeRes() == R.style.Theme_APlayer_Black;
+  }
+
+  public static boolean isDarkTheme() {
+    return getThemeRes() == R.style.Theme_APlayer_Dark;
   }
 
 }

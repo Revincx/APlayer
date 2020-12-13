@@ -10,7 +10,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.widget.DrawerLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import remix.myplayer.App;
 import remix.myplayer.R;
 import remix.myplayer.theme.ThemeStore;
 import remix.myplayer.ui.widget.StatusBarView;
@@ -248,6 +250,15 @@ public class StatusBarUtil {
 
 //        addTranslucentView(activity, statusBarAlpha);
 
+  }
+
+  public float getStatusBarHeight() {
+    float result = 0;
+    int resourceId = App.getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
+    if (resourceId > 0) {
+      result = App.getContext().getResources().getDimension(resourceId);
+    }
+    return result;
   }
 
 

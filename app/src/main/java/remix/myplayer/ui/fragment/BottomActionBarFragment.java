@@ -7,7 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -53,6 +53,8 @@ public class BottomActionBarFragment extends BaseMusicFragment {
   @BindView(R.id.playbar_next)
   ImageView mPlayNext;
   //歌曲名艺术家
+  @BindView(R.id.playbar_prev)
+  ImageView mPlayPrev;
   @BindView(R.id.bottom_title)
   TextView mTitle;
   @BindView(R.id.bottom_artist)
@@ -63,6 +65,7 @@ public class BottomActionBarFragment extends BaseMusicFragment {
   LinearLayout mRootView;
   @BindView(R.id.bottom_action_bar_cover)
   SimpleDraweeView mCover;
+
 
 //  //保存封面位置信息
 //  private Rect mCoverRect;
@@ -87,7 +90,7 @@ public class BottomActionBarFragment extends BaseMusicFragment {
     Theme.tintDrawable(rootView,
         R.drawable.commom_playercontrols_bg, ThemeStore.getBackgroundColorDialog(mContext));
     Theme.tintDrawable(mPlayNext,
-        R.drawable.bf_btn_next,
+        R.drawable.ic_baseline_skip_next_24,
         ThemeStore.getBottomBarBtnColor());
 
     //手势检测
@@ -98,6 +101,7 @@ public class BottomActionBarFragment extends BaseMusicFragment {
     CtrlButtonListener listener = new CtrlButtonListener(App.getContext());
     mPlayButton.setOnClickListener(listener);
     mPlayNext.setOnClickListener(listener);
+    mPlayPrev.setOnClickListener(listener);
 
 //    //获取封面位置信息
 //    mCover.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -148,11 +152,11 @@ public class BottomActionBarFragment extends BaseMusicFragment {
     }
     if (MusicServiceRemote.isPlaying()) {
       Theme.tintDrawable(mPlayButton,
-          R.drawable.bf_btn_stop,
+          R.drawable.ic_baseline_pause_24,
           ThemeStore.getBottomBarBtnColor());
     } else {
       Theme.tintDrawable(mPlayButton,
-          R.drawable.bf_btn_play,
+          R.drawable.ic_baseline_play_arrow_24,
           ThemeStore.getBottomBarBtnColor());
     }
   }

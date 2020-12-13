@@ -377,6 +377,7 @@
   <string name="accent_color">Accent color</string>
   <string name="accent_color_tip">Allow yourself to choose colors that you love</string>
   <string name="general_theme">General theme</string>
+  <string name="night_mode">Night Mode</string>
   <string name="light_theme">Light</string>
   <string name="dark_theme">Dark</string>
   <string name="black_theme">Black (AMOLED)</string>

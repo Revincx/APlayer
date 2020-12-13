@@ -3,13 +3,22 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:fitsSystemWindows="true"
+  android:fitsSystemWindows="false"
   android:id="@+id/audio_holder_container"
   android:background="?attr/background_color_main">
+
+  <com.facebook.drawee.view.SimpleDraweeView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/bg_cover"
+    android:scaleType="centerCrop"
+    android:fitsSystemWindows="false"/>
 
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout_player"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
     <RelativeLayout
       android:layout_width="match_parent"
@@ -63,7 +72,7 @@
       android:id="@+id/layout_player_seekbar"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:layout_weight="1">
+      android:layout_weight="0.7">
       <!--已播放时间-->
       <TextView
         android:id="@+id/text_hasplay"

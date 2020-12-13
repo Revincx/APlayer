@@ -1,5 +1,6 @@
 package remix.myplayer.ui.activity.base;
 
+import static remix.myplayer.theme.ThemeStore.isLightTheme;
 import static remix.myplayer.theme.ThemeStore.sColoredNavigation;
 import static remix.myplayer.util.Util.sendLocalBroadcast;
 
@@ -9,8 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import remix.myplayer.BuildConfig;
 import remix.myplayer.helper.LanguageHelper;
@@ -44,6 +44,7 @@ public class BaseActivity extends AppCompatActivity {
   protected void setUpTheme() {
     setTheme(ThemeStore.getThemeRes());
   }
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ public class BaseActivity extends AppCompatActivity {
    * 设置状态栏颜色
    */
   protected void setStatusBarColor() {
-    StatusBarUtil.setColorNoTranslucent(this, ThemeStore.getStatusBarColor());
+    StatusBarUtil.setColor(this, ThemeStore.getStatusBarColor());
   }
 
   /**

@@ -7,10 +7,10 @@ import static remix.myplayer.util.MusicUtil.makeCmdIntent;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.Loader;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.annotation.Nullable;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.View;
 import butterknife.BindView;
 import java.util.List;
@@ -70,7 +70,7 @@ public class SongFragment extends LibraryFragment<Song, SongAdapter> {
               return;
             }
             setPlayQueue(songs, makeCmdIntent(Command.PLAYSELECTEDSONG)
-                .putExtra(EXTRA_POSITION, position));
+                    .putExtra(EXTRA_POSITION, position));
           }
         }
       }

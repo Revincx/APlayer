@@ -1,9 +1,15 @@
 package remix.myplayer.ui.fragment;
 
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +24,7 @@ import remix.myplayer.bean.mp3.Song;
 import remix.myplayer.helper.MusicServiceRemote;
 import remix.myplayer.service.Command;
 import remix.myplayer.theme.ThemeStore;
+import remix.myplayer.ui.activity.PlayerActivity;
 import remix.myplayer.ui.fragment.base.BaseMusicFragment;
 
 /**
@@ -56,6 +63,7 @@ public class CoverFragment extends BaseMusicFragment {
 
     return rootView;
   }
+
 
 
   /**

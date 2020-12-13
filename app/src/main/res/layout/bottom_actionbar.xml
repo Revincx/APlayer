@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:fresco="http://schemas.android.com/apk/res-auto"
-  android:orientation="vertical"
-  android:layout_width="match_parent"
-  android:layout_height="@dimen/item_height"
-  android:background="@drawable/commom_playercontrols_bg"
-  android:id="@+id/bottom_actionbar_root">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@drawable/commom_playercontrols_bg"
+        android:id="@+id/bottom_actionbar_root">
   <ImageView
     android:layout_width="match_parent"
     android:layout_height="1px"
@@ -26,27 +27,38 @@
       fresco:placeholderImageScaleType="centerCrop"
       fresco:placeholderImage="?attr/default_album"
       fresco:fadeDuration="0"
+      app:roundAsCircle="true"
       android:layout_centerVertical="true"/>
 
     <ImageView
-      android:id="@+id/playbar_next"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:src="@drawable/bf_btn_next"
-      android:layout_centerVertical="true"
-      android:layout_alignParentRight="true"
-      android:layout_marginRight="@dimen/d16_size"/>
+            android:id="@+id/playbar_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fresco:srcCompat="@drawable/ic_baseline_skip_next_24"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/d16_size"/>
 
     <!-- 播放按钮 -->
     <ImageView
-      android:layout_centerVertical="true"
-      android:layout_toLeftOf="@id/playbar_next"
-      android:id="@+id/playbar_play"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:background="@color/transparent"
-      android:src="@drawable/bf_btn_play"
-      android:layout_marginRight="@dimen/d16_size"/>
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/playbar_next"
+            android:id="@+id/playbar_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            fresco:srcCompat="@drawable/ic_baseline_play_arrow_24"
+            android:layout_marginRight="@dimen/d16_size"/>
+
+    <ImageView
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/playbar_play"
+            android:id="@+id/playbar_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            fresco:srcCompat="@drawable/ic_baseline_skip_previous_24"
+            android:layout_marginRight="@dimen/d16_size"/>
 
     <!-- 歌曲名与歌手 -->
     <LinearLayout
@@ -56,7 +68,7 @@
       android:layout_height="match_parent"
       android:orientation="vertical"
       android:gravity="center_vertical"
-      android:layout_marginLeft="@dimen/d8_size"
+      android:layout_marginLeft="@dimen/d12_size"
       android:layout_marginRight="@dimen/d8_size">
       <TextView
         android:layout_height="wrap_content"

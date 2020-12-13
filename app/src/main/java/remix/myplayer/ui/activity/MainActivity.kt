@@ -5,23 +5,22 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.*
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Message
 import android.provider.Settings
-import android.support.design.widget.NavigationView
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.Menu
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.Switch
 import android.widget.TextView
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -30,6 +29,8 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.rebound.SimpleSpringListener
 import com.facebook.rebound.Spring
 import com.facebook.rebound.SpringSystem
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import remix.myplayer.App
@@ -40,6 +41,7 @@ import remix.myplayer.bean.mp3.Song
 import remix.myplayer.db.room.DatabaseRepository
 import remix.myplayer.db.room.model.PlayList
 import remix.myplayer.helper.MusicServiceRemote
+import remix.myplayer.helper.MusicServiceRemote.getCurrentSong
 import remix.myplayer.helper.SortOrder
 import remix.myplayer.misc.handler.MsgHandler
 import remix.myplayer.misc.handler.OnHandleMessage
@@ -58,8 +60,8 @@ import remix.myplayer.request.network.RxUtil.applySingleScheduler
 import remix.myplayer.service.MusicService
 import remix.myplayer.theme.Theme
 import remix.myplayer.theme.ThemeStore
-import remix.myplayer.theme.ThemeStore.getMaterialPrimaryColor
-import remix.myplayer.theme.ThemeStore.getMaterialPrimaryColorReverse
+import remix.myplayer.theme.ThemeStore.*
+import remix.myplayer.ui.activity.base.BaseActivity
 import remix.myplayer.ui.adapter.DrawerAdapter
 import remix.myplayer.ui.adapter.MainPagerAdapter
 import remix.myplayer.ui.fragment.*
@@ -86,12 +88,18 @@ open class MainActivity : MenuActivity() {
   lateinit var mDrawerLayout: DrawerLayout
   @BindView(R.id.add)
   lateinit var mAddButton: ImageView
+  @BindView(R.id.header_root)
+  lateinit var mHeadRoot: RelativeLayout
   @BindView(R.id.header_txt)
   lateinit var mHeadText: TextView
+  @BindView(R.id.header_artist)
+  lateinit var mHeadArtist: TextView
   @BindView(R.id.header_img)
   lateinit var mHeadImg: SimpleDraweeView
-  @BindView(R.id.header)
-  lateinit var mHeadRoot: View
+  @BindView(R.id.night_mode_text)
+  lateinit var mNightModeTextView: TextView
+  @BindView(R.id.night_mode_switch)
+  lateinit var mSwitch: Switch
   @BindView(R.id.recyclerview)
   lateinit var mRecyclerView: RecyclerView
 
@@ -122,12 +130,11 @@ open class MainActivity : MenuActivity() {
    */
   private var mInstallPath: String? = null
 
-
-  private var mForceDialog: MaterialDialog? = null
-
   override fun onNewIntent(intent: Intent?) {
     super.onNewIntent(intent)
   }
+
+  private var mForceDialog: MaterialDialog? = null
 
   override fun onResume() {
     super.onResume()
@@ -168,6 +175,7 @@ open class MainActivity : MenuActivity() {
     //初始化测滑菜单
     setUpDrawerLayout()
     setUpViewColor()
+    setUpSwitch()
     //handler
     mRefreshHandler.postDelayed({ this.checkUpdate() }, 500)
 
@@ -175,10 +183,27 @@ open class MainActivity : MenuActivity() {
     MultipleChoice.isActiveSomeWhere = false
   }
 
+  private fun setUpSwitch(){
+    if(!isLightTheme()){
+      mSwitch.setChecked(true)
+    }
+    mSwitch.setOnCheckedChangeListener { compoundButton, b ->
+      if(compoundButton.isChecked){
+        setGeneralTheme(1)
+      }
+      else
+      {
+        setGeneralTheme(0)
+      }
+      finish()
+      startActivity(this.intent)
+    }
+  }
+
   override fun setStatusBarColor() {
     StatusBarUtil.setColorNoTranslucentForDrawerLayout(this,
         findViewById(R.id.drawer_layout),
-        ThemeStore.getStatusBarColor())
+        getStatusBarColor())
   }
 
   /**
@@ -187,8 +212,10 @@ open class MainActivity : MenuActivity() {
   private fun setUpToolbar() {
     super.setUpToolbar("")
     toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp)
+    toolbar.setTitle(R.string.app_name)
     toolbar.setNavigationOnClickListener { v -> mDrawerLayout.openDrawer(mNavigationView) }
   }
+
 
   /**
    * 新建播放列表
@@ -285,10 +312,10 @@ open class MainActivity : MenuActivity() {
 
   fun parseMenuId(tag: Int): Int {
     return when (tag) {
+      Category.TAG_PLAYLIST -> R.menu.menu_playlist
       Category.TAG_SONG -> R.menu.menu_main
       Category.TAG_ALBUM -> R.menu.menu_album
       Category.TAG_ARTIST -> R.menu.menu_artist
-      Category.TAG_PLAYLIST -> R.menu.menu_playlist
       Category.TAG_FOLDER -> R.menu.menu_folder
       else -> R.menu.menu_main_simple
     }
@@ -371,23 +398,21 @@ open class MainActivity : MenuActivity() {
     //        mTabLayout.setLayoutParams(new AppBarLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,DensityUtil.dip2px(this,48)));
     //        mTabLayout = new TabLayout(this);
     mTabLayout.setBackgroundColor(getMaterialPrimaryColor())
+//    mTabLayout.setTabTextColors(Color.BLACK,ThemeStore.getAccentColor())
+    mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_playlist))
     mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_song))
     mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_album))
     mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_artist))
-    mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_playlist))
     mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_folder))
+    mTabLayout.setBackgroundColor(getMaterialPrimaryColor())
     //viewpager与tablayout关联
     mTabLayout.setupWithViewPager(mViewPager)
     mTabLayout.setSelectedTabIndicatorColor(if (isPrimaryColorCloseToWhite) Color.BLACK else Color.WHITE)
     //        mTabLayout.setSelectedTabIndicatorColor(ColorUtil.getColor(isLightColor ? R.color.black : R.color.white));
     mTabLayout.setSelectedTabIndicatorHeight(DensityUtil.dip2px(this, 3f))
-    mTabLayout.setTabTextColors(ColorUtil.getColor(
-        if (isPrimaryColorCloseToWhite)
-          R.color.dark_normal_tab_text_color
-        else
-          R.color.light_normal_tab_text_color),
+    mTabLayout.setTabTextColors(getTextColorPrimary(),
         ColorUtil.getColor(if (isPrimaryColorCloseToWhite) R.color.black else R.color.white))
-
+    mTabLayout.setSelectedTabIndicatorColor(getAccentColor())
     setTabClickListener()
   }
 
@@ -458,6 +483,13 @@ open class MainActivity : MenuActivity() {
 
       override fun onDrawerStateChanged(newState: Int) {}
     })
+    mNightModeTextView.setTextColor(getTextColorPrimary())
+    mHeadRoot.setOnClickListener(object: View.OnClickListener{
+      override fun onClick(p0: View?) {
+        mDrawerLayout.closeDrawer(mNavigationView)
+        startPlayerActivity()
+      }
+    })
   }
 
   /**
@@ -465,15 +497,9 @@ open class MainActivity : MenuActivity() {
    */
   private fun setUpViewColor() {
     //正在播放文字的背景
-    val bg = GradientDrawable()
-    val primaryColor = getMaterialPrimaryColor()
 
-    bg.setColor(ColorUtil.darkenColor(primaryColor))
-    bg.cornerRadius = DensityUtil.dip2px(this, 4f).toFloat()
-    mHeadText.background = bg
     mHeadText.setTextColor(getMaterialPrimaryColorReverse())
     //抽屉
-    mHeadRoot.setBackgroundColor(primaryColor)
     mNavigationView.setBackgroundColor(ThemeStore.getDrawerDefaultColor())
 
     //这种图片不知道该怎么着色 暂时先这样处理
@@ -558,11 +584,22 @@ open class MainActivity : MenuActivity() {
     super.onMetaChanged()
     val currentSong = MusicServiceRemote.getCurrentSong()
     if (currentSong != Song.EMPTY_SONG) {
-      mHeadText.text = getString(R.string.play_now, currentSong.title)
+      mHeadText.text = currentSong.title
+      mHeadArtist.text = currentSong.artist
       LibraryUriRequest(mHeadImg,
           getSearchRequestWithAlbumType(currentSong),
           RequestConfig.Builder(IMAGE_SIZE, IMAGE_SIZE).build()).load()
     }
+  }
+
+  fun startPlayerActivity(){
+    if (getCurrentSong().id < 0) {
+      return
+    }
+    val intent = Intent(mContext, PlayerActivity::class.java)
+    val bundle = Bundle()
+    intent.putExtras(bundle)
+    mContext.startActivity(intent)
   }
 
   override fun onPlayStateChange() {
@@ -614,6 +651,11 @@ open class MainActivity : MenuActivity() {
     }
   }
 
+  fun toPlayerActivity(){
+    val bottomActionBarFragment = supportFragmentManager.findFragmentByTag("BottomActionBarFragment") as BottomActionBarFragment?
+    bottomActionBarFragment?.startPlayerActivity()
+  }
+
   private fun checkUpdate() {
     if (!IS_GOOGLEPLAY && !mAlreadyCheck) {
       UpdateAgent.forceCheck = false
@@ -660,11 +702,6 @@ open class MainActivity : MenuActivity() {
         .progress(true, 0)
         .progressIndeterminateStyle(false).build()
     mForceDialog?.show()
-  }
-
-  fun toPlayerActivity(){
-    val bottomActionBarFragment = supportFragmentManager.findFragmentByTag("BottomActionBarFragment") as BottomActionBarFragment?
-    bottomActionBarFragment?.startPlayerActivity()
   }
 
   class MainReceiver internal constructor(mainActivity: MainActivity) : BroadcastReceiver() {

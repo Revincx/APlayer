@@ -12,8 +12,8 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 import com.facebook.common.util.ByteConstants;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.cache.MemoryCacheParams;
@@ -86,7 +86,7 @@ public class App extends MultiDexApplication implements ActivityLifecycleCallbac
     Completable
         .fromAction(() -> {
           ThemeStore.sImmersiveMode = SPUtil
-              .getValue(App.getContext(), SETTING_KEY.NAME, SETTING_KEY.IMMERSIVE_MODE, false);
+              .getValue(App.getContext(), SETTING_KEY.NAME, SETTING_KEY.IMMERSIVE_MODE, true);
           ThemeStore.sTheme = SPUtil.getValue(App.getContext(), NAME, KEY_THEME, LIGHT);
           ThemeStore.sColoredNavigation = SPUtil.getValue(App.getContext(), SETTING_KEY.NAME,
               SETTING_KEY.COLOR_NAVIGATION, false);

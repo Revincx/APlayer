@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
@@ -8,15 +8,6 @@
   android:layout_height="@dimen/d64_size"
   android:background="?attr/background_list">
 
-  <View
-    android:id="@+id/indicator"
-    android:layout_width="4dp"
-    android:layout_height="match_parent"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
 
   <com.facebook.drawee.view.SimpleDraweeView
     android:id="@+id/song_head_image"
@@ -102,4 +93,4 @@
     app:srcCompat="@drawable/icon_sq"
     tools:visibility="visible"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
