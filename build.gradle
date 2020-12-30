@@ -23,6 +23,12 @@ allprojects {
         maven {
             url "https://maven.aliyun.com/repository/jcenter"
         }
+        maven {
+            url "https://dl.bintray.com/rikkaw/MaterialPreference"
+        }
+        maven {
+            url "https://dl.bintray.com/rikkaw/Libraries"
+        }
         jcenter()
         google()
         mavenCentral()

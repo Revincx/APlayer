@@ -7,7 +7,14 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:background="?attr/background_color_main"
-  android:fitsSystemWindows="true">
+  android:fitsSystemWindows="false">
+
+  <com.facebook.drawee.view.SimpleDraweeView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/bg_cover"
+          android:scaleType="centerCrop"
+          android:fitsSystemWindows="false"/>
 
   <!--三个导航图标-->
   <LinearLayout
@@ -45,6 +52,8 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout_player"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
     <RelativeLayout
       android:layout_width="match_parent"

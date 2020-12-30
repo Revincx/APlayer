@@ -32,6 +32,7 @@ import remix.myplayer.request.RequestConfig;
 import remix.myplayer.service.MusicService;
 import remix.myplayer.theme.Theme;
 import remix.myplayer.theme.ThemeStore;
+import remix.myplayer.ui.activity.MainActivity;
 import remix.myplayer.ui.activity.PlayerActivity;
 import remix.myplayer.ui.activity.base.BaseActivity;
 import remix.myplayer.ui.fragment.base.BaseMusicFragment;
@@ -230,6 +231,8 @@ public class BottomActionBarFragment extends BaseMusicFragment {
 
     @Override
     public boolean onDoubleTap(MotionEvent e) {
+      MainActivity activity = (MainActivity) mReference.get().getActivity();
+      activity.scrollToCurrent();
       return true;
     }
 

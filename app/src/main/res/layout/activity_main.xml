@@ -55,14 +55,14 @@
             </androidx.cardview.widget.CardView>
 
 
-            <ImageView
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:scaleType="center"
                     android:layout_marginRight="@dimen/d38_size"
-                    android:layout_marginBottom="@dimen/d80_size"
+                    android:layout_marginBottom="100dp"
                     android:visibility="gone"/>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -111,8 +111,8 @@
                         android:layout_marginTop="5dp"
                         android:text="@string/playing"
                         android:gravity="left"
-                        android:lines="1"
-                        android:ellipsize="end"/>
+                        android:singleLine="true"
+                        android:ellipsize="marquee"/>
 
                 <TextView
                         android:layout_width="wrap_content"

@@ -142,13 +142,13 @@ public abstract class HeaderAdapter<M, B extends RecyclerView.ViewHolder> extend
   private void tintModeButton(HeaderHolder headerHolder) {
     headerHolder.mListModeBtn.setImageDrawable(
         Theme.tintVectorDrawable(headerHolder.itemView.getContext(),
-            R.drawable.ic_format_list_bulleted_white_24dp,
+            R.drawable.ic_baseline_format_list_bulleted,
             mMode == LIST_MODE ? ThemeStore.getAccentColor()
                 : ColorUtil.getColor(R.color.default_model_button_color))
     );
 
     headerHolder.mGridModeBtn.setImageDrawable(
-        Theme.tintVectorDrawable(headerHolder.itemView.getContext(), R.drawable.ic_apps_white_24dp,
+        Theme.tintVectorDrawable(headerHolder.itemView.getContext(), R.drawable.ic_baseline_grid_on,
             mMode == GRID_MODE ? ThemeStore.getAccentColor()
                 : ColorUtil.getColor(R.color.default_model_button_color))
     );
