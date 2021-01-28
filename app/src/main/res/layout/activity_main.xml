@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include layout="@layout/toolbar" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/tab_height" />
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!--中间四个fragment-->
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/item_height"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <!-- 底部自定义ationbar -->
+
+                <fragment
+                    android:id="@+id/bottom_actionbar_new"
+                    android:layout_gravity="bottom"
+                    android:name="remix.myplayer.ui.fragment.BottomActionBarFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:tag="BottomActionBarFragment" />
+
+
+            <ImageView
+                android:id="@+id/btn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="@dimen/d38_size"
+                android:layout_marginBottom="@dimen/d80_size"
+                android:scaleType="center"
+                android:visibility="gone" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </LinearLayout>
+
+
+    <!--测滑菜单-->
+    <!--<include layout="@layout/slide_menu"/>-->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="@dimen/d264_size"
+        android:layout_height="match_parent"
+        android:layout_gravity="start">
+        <RelativeLayout
+            android:id="@+id/navigation_header_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/d48_size"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/header_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/d20_size"
+                android:layout_gravity="left">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/header_img"
+                    android:layout_width="@dimen/d64_size"
+                    android:layout_height="@dimen/d64_size"
+                    android:layout_marginEnd="15dp"
+                    android:layout_alignParentStart="true"
+                    android:scaleType="centerCrop"
+                    app:roundedCornerRadius="8dp"/>
+
+                <TextView
+                    android:id="@+id/header_txt"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/d15_size"
+                    android:layout_toEndOf="@id/header_img"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/playing"
+                    android:gravity="left"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/header_txt"
+                    android:layout_toEndOf="@id/header_img"
+                    android:layout_marginTop="5dp"
+                    android:maxLines="1"
+                    android:id="@+id/header_artist"/>
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/header_root"
+                android:layout_marginTop="@dimen/d6_size"/>
+
+            <RelativeLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/d32_size">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/night_mode_text"
+                    android:layout_toStartOf="@id/night_mode_switch"
+                    android:layout_alignParentStart="true"
+                    android:textColor="@color/black"
+                    android:layout_alignBaseline="@id/night_mode_switch"
+                    android:text="@string/night_mode"/>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d5_szie"
+                    android:id="@+id/night_mode_switch"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

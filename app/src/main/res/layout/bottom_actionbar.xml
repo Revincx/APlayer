@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/bottom_actionbar_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="?attr/divider_color" />
+        <!-- 底部自定义actionbar -->
+        <RelativeLayout
+            android:id="@+id/bottom_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!-- 封面 -->
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/bottom_action_bar_cover"
+                android:layout_width="@dimen/d48_size"
+                android:layout_height="@dimen/d48_size"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/d12_size"
+                app:actualImageScaleType="centerCrop"
+                app:fadeDuration="0"
+                app:placeholderImage="?attr/default_album"
+                app:placeholderImageScaleType="centerCrop"
+                app:roundAsCircle="true" />
+
+            <ImageView
+                android:id="@+id/playbar_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/d16_size"
+                app:srcCompat="@drawable/ic_baseline_skip_next_24" />
+
+            <!-- 播放按钮 -->
+            <ImageView
+                android:id="@+id/playbar_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/d16_size"
+                android:layout_toLeftOf="@id/playbar_next"
+                android:background="@color/transparent"
+                app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+
+            <!-- 歌曲名与歌手 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/d8_size"
+                android:layout_marginRight="@dimen/d8_size"
+                android:layout_toLeftOf="@id/playbar_play"
+                android:layout_toRightOf="@id/bottom_action_bar_cover"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bottom_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="?attr/text_color_primary"
+                    android:textSize="@dimen/s16_size" />
+
+                <TextView
+                    android:id="@+id/bottom_artist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="?attr/text_color_secondary"
+                    android:textSize="@dimen/s14_size" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
